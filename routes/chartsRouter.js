@@ -1,6 +1,4 @@
 var express = require('express');
-var Template = require('template-js')
-var path = require('path');
 
 var items = require('../factory/itemFactory').getItems();
 var itemDetails = require('../factory/itemDetails');
