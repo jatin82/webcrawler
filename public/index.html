@@ -1,0 +1,94 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./js/loader.js"></script>
+<link rel="stylesheet" href="./css/loader.css">
+<script>
+
+var api = 'http://localhost:3000/api/charts';  
+var chartX = [];
+var chartY = [];  
+var getChartData = function(){
+    
+  $.ajax({url: api, success: function(result){
+            console.log(result);
+            for(i of result){
+                for(j in i){
+                    chartX.push(j);
+                    chartY.push(+i[j]);
+                }
+            }
+            $("#loader-wrapper").css({'display':'none'});
+            $("#container").css({'display':'block'});
+            
+            createChart();
+        },
+        error: function(err){
+          console.log(err);
+          alert("Something went wrong");
+        }
+    });
+}
+getChartData();
+
+var createChart = function(){
+    Highcharts.chart('container', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'Amazon products page count'
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    categories: chartX,
+    crosshair: true
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: ''
+    }
+  },
+  tooltip: {
+    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+      '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+    footerFormat: '</table>',
+    shared: true,
+    useHTML: true
+  },
+  plotOptions: {
+    column: {
+      pointPadding: 0,
+      borderWidth: 0,
+      groupPadding: 0,
+      shadow: false
+    }
+  },
+  series: [{
+    name: 'Page Counts',
+    data: chartY
+
+  }]
+});
+}
+
+
+
+</script>
+
+<body>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto; display:none"></div>
+
+<div id="loader-wrapper">
+    <div id = "loadertwo" style="width:'100px';height:'100px'"></div>
+</div>
+
+</body>
