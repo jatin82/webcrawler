@@ -18,9 +18,6 @@ var tag = ".pagnDisabled";
 var mainRouter  = express.Router();
 
 
-
-const htmlparser2 = require('htmlparser2');
-
 mainRouter.route('/')
 .all(function(req,res,next) {
         res.set('Content-Type', 'application/json');
@@ -74,6 +71,11 @@ var fetchChartData = function(res,db,client){
                         
                                                 var $ = cheerio.load(html.body);
                                                 let ans = $(tag).text();
+                                                if(ans===undefined && ans===''){
+                                                        client.close();
+                                                        throw new Error("Not found");
+                                                }
+                                                console.log(ans);
                                                 console.log("i is "+i);
                                                 let item = {[i]:ans};
                                                 console.log(item);
