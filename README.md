@@ -4,4 +4,4 @@
 4. Execute node app.js
 5. Open browser with http://localhost:3000
 
-DEMO ![alt text](http://url/to/img.png)
+DEMO ![alt text](https://github.com/jatin82/webcrawler/blob/master/amazon-products-page-cou.jpeg)
