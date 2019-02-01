@@ -3,9 +3,13 @@ var express = require('express');
 var logger = require('morgan');
 var indexRouter = require('./routes/chartsRouter');
 var path = require('path');
-
+var cors = require('cors');
 
 var app = express();
+var corsOptions = {
+  origin: '*'
+}
+app.use(cors(corsOptions));
 
 var mongo = require('mongodb').MongoClient;;
 var dbops = require('./db/dbOps');
